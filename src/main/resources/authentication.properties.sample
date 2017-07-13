@@ -1,0 +1,10 @@
+# This is a sample authentication property file used to connect with the Twitter API.
+#
+# Rename this file as "application.properties"
+# Replace the values below with your real Twitter API credentials
+# Ensure these credentials are never stored to a public repository.
+
+consumerKey=my-consumer-key
+consumerSecret=my-consumer-secret
+token=my-token
+tokenSecret=my-token-secret
