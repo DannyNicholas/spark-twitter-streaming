@@ -2,6 +2,7 @@ package com.danosoftware.twitterstream.config;
 
 import com.danosoftware.twitterstream.factories.ClientFactory;
 import com.danosoftware.twitterstream.factories.TwitterClientFactory;
+import com.danosoftware.twitterstream.streaming.LanguageTwitterStreamProcessor;
 import com.danosoftware.twitterstream.streaming.TwitterStreamProcessor;
 import com.danosoftware.twitterstream.streaming.TwitterStreamReceiver;
 import com.danosoftware.twitterstream.utilities.AuthenticationBuilder;
@@ -44,7 +45,7 @@ public class AppConfig {
     @Bean(name = "twitterStreamProcessor")
     @Autowired
     public TwitterStreamProcessor twitterStreamProcessor(Receiver<String> streamReceiver) {
-        return new TwitterStreamProcessor(streamReceiver);
+        return new LanguageTwitterStreamProcessor(streamReceiver);
     }
 
     /**

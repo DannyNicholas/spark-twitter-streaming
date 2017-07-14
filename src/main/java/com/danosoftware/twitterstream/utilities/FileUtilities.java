@@ -1,7 +1,10 @@
 package com.danosoftware.twitterstream.utilities;
 
+import org.apache.spark.streaming.api.java.JavaDStream;
+import org.apache.spark.streaming.api.java.JavaPairDStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import scala.Tuple2;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -9,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtilities {
@@ -70,6 +74,47 @@ public class FileUtilities {
 			logger.error("Error while creating directory '{}'.", directoryPath.getFileName());
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * Write Spark DStream pair to a text file.
+	 *
+	 * @param pairStream - Spark DStream pair
+	 * @param fileName - filename to write to
+	 * @param <K> - key type
+	 * @param <V> - value type
+	 */
+	public static <K, V> void writePairToFile(JavaPairDStream<K, V> pairStream, final String fileName) {
+
+		pairStream.foreachRDD((pairs) -> {
+			List<String> outputText = new ArrayList<>();
+			for (Tuple2<K, V> item : pairs.collect()) {
+				outputText.add(item._1.toString() + " : " + item._2.toString());
+			}
+			outputText.add("------------------------");
+			FileUtilities.appendText(fileName, outputText);
+			return null;
+		});
+	}
+
+	/**
+	 * Write Spark DStream to a text file.
+	 *
+	 * @param stream - Spark DStream
+	 * @param fileName - filename to write to
+	 * @param <T> - stream type
+	 */
+	public static <T> void writeToFile(JavaDStream<T> stream, final String fileName) {
+
+		stream.foreachRDD((items) -> {
+			List<String> outputText = new ArrayList<>();
+			for (T anItem : items.collect()) {
+				outputText.add(anItem.toString());
+			}
+			outputText.add("------------------------");
+			FileUtilities.appendText(fileName, outputText);
+			return null;
+		});
 	}
 
 	

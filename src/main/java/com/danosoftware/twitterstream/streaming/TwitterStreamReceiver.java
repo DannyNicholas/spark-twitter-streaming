@@ -55,7 +55,7 @@ public class TwitterStreamReceiver extends Receiver<String> {
             while (!clientShutdown) {
                 try {
                     String msg = msgQueue.take();
-                    logger.trace("Received message: {}.", msg);
+                    logger.info("Received message: {}.", msg);
                     store(msg);
                 } catch (InterruptedException e) {
                     logger.error("InterruptedException while receiving from stream.");
