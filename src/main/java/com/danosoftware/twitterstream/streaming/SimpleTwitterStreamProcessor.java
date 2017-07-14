@@ -20,7 +20,7 @@ public class SimpleTwitterStreamProcessor implements TwitterStreamProcessor {
 
     final static Logger logger = LoggerFactory.getLogger(SimpleTwitterStreamProcessor.class);
 
-    private static final String SPARK_APP_NAME = "CustomerSalesProcessor";
+    private static final String SPARK_APP_NAME = "TwitterStreamProcessor";
     private static final String SPARK_MASTER_URL = "local[*]";
     private static final long SPARK_BATCH_DURATION_IN_SECONDS = 2;
 
@@ -80,7 +80,7 @@ public class SimpleTwitterStreamProcessor implements TwitterStreamProcessor {
      * Initialise output file for writing.
      */
     private void initialiseOutput() {
-        logger.info("Customer Sales results will be written to '{}'.", OUTPUT_FILEPATH);
+        logger.info("Results will be written to '{}'.", OUTPUT_FILEPATH);
 
         // create results directory
         FileUtilities.createDirectory(OUTPUT_DIRECTORY);
