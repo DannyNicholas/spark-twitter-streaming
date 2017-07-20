@@ -75,6 +75,8 @@ public class AverageWordsProcessor implements TwitterStreamProcessor {
         // average number of words per tweet
         wordCount.foreachRDD((wordCounts) -> {
 
+            AvgCount initial =  new AvgCount(0, 0);
+
             Function2<AvgCount, Integer, AvgCount> addAndCount = (acc, value) -> {
                 acc.total += value;
                 acc.count += 1;
@@ -86,8 +88,6 @@ public class AverageWordsProcessor implements TwitterStreamProcessor {
                 acc1.count += acc2.count;
                 return acc1;
             };
-
-            AvgCount initial =  new AvgCount(0, 0);
 
             AvgCount accumulator = wordCounts.aggregate(
                     initial,
