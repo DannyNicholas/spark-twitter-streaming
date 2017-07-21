@@ -17,11 +17,11 @@ import java.util.Arrays;
 /**
  * Spark processor designed to find the most common words in the stream of tweets
  */
-public class MostComonWordsProcessor implements TwitterStreamProcessor {
+public class MostCommonWordsProcessor implements TwitterStreamProcessor {
 
-    final static Logger logger = LoggerFactory.getLogger(MostComonWordsProcessor.class);
+    final static Logger logger = LoggerFactory.getLogger(MostCommonWordsProcessor.class);
 
-    private static final String SPARK_APP_NAME = "MostComonWordsProcessor";
+    private static final String SPARK_APP_NAME = "MostCommonWordsProcessor";
     private static final String SPARK_MASTER_URL = "local[*]";
     private static final long SPARK_BATCH_DURATION_IN_SECONDS = 2;
 
@@ -34,7 +34,7 @@ public class MostComonWordsProcessor implements TwitterStreamProcessor {
     // receiver used to consume twitter stream
     private final Receiver<String> streamReceiver;
 
-    public MostComonWordsProcessor(Receiver<String> streamReceiver) {
+    public MostCommonWordsProcessor(Receiver<String> streamReceiver) {
 
         this.streamReceiver = streamReceiver;
 
@@ -77,7 +77,7 @@ public class MostComonWordsProcessor implements TwitterStreamProcessor {
                         Durations.seconds(30));
 
         // filter for words greater than 10 occurrences
-        JavaPairDStream<String, Long> filteredCount = wordCount.filter((pair) -> pair._2 > 5);
+        JavaPairDStream<String, Long> filteredCount = wordCount.filter((pair) -> pair._2 > 10);
 
         // write filtered pair to file
         FileUtilities.writePairToFile(filteredCount, OUTPUT_FILEPATH);
