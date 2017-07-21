@@ -88,7 +88,9 @@ As an example, the JSON structure of a tweet can be seen at `tweet-example.json`
 Below is a quick summary of the Spark processors used in this application:
 
 - `SimpleTwitterStreamProcessor` : Extracts tweet id and tweet text from the stream and writes them to a file.
-- `LanguageTwitterStreamProcessor` : Counts the most common user languages over the last 10 seconds.
+- `LanguageTwitterStreamProcessor` : Counts the most common user languages.
+- `MostCommonWordsProcessor` : Finds the most common longer words used in tweets.
+- `AverageWordsProcessor` : Averages the number of words per tweet.
 
 It is possible to add more processors or switch which processor you want to run.
 
